@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{
+            font-size: 18px;
+        }
+        #wrap {
+            width: 300px;
+            height: 400px;
+            margin: 30px auto;
+            position: relative;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav {
+            overflow: auto;
+            margin-bottom: 5px;
+            border-bottom: 1px solid gray;
+        }
+
+        .nav .choose {
+            border-bottom: 3px solid #000;
+        }
+
+        .nav a {
+            text-decoration: none;
+            float: left;
+            margin-left: 25px;
+        }
+
+        #contains ul .one:before {
+            content: '>';
+            width: 10px;
+            height: 10px;
+            margin: 3px;
+        }
+        #contains ul li{
+            line-height: 30px;
+        }
+
+        #contains ul ul {
+            display: none;
+        }
+        #contains ul ul li{
+            padding-left: 12px;
+            border-bottom: 1px solid grey;
+        }
+        #contains ul .show1{
+            display: block;
+        }
+        #contains ul {
+            display: none;
+        }
+
+        #contains .show {
+            display: block;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var navs = document.querySelectorAll('.nav a');
+            var ulist = document.querySelectorAll('#contains .item');
+            var lis = document.getElementsByClassName('one');
+            for (var i = 0; i < navs.length; i++) {
+                navs[i].onclick = function () {
+                    for (var j = 0; j < navs.length; j++) {
+                        navs[j].index = j;
+                        navs[j].classList.remove('choose');
+                        ulist[j].classList.remove('show');
+                    }
+                    this.classList.add('choose');
+                    ulist[this.index].classList.add('show');
+                }
+            }
+            for(var j = 0; j < lis.length; j++) {
+                lis[j].onclick = function() {
+                    var lili = this.getElementsByTagName('ul')[0];
+                    lili.classList.toggle('show1');
+                };
+            }
+
+        }
+    </script>
+</head>
+<body>
+<div id="wrap">
+    <nav class="nav">
+        <a href="#" class="choose">好友</a>
+        <a href="#">群聊</a>
+        <a href="#">设备</a>
+    </nav>
+    <div id="contains">
+        <ul class="item show">
+            <li class="one">特别关心
+                <ul>
+                    <li>aa</li>
+                    <li>aa</li>
+                    <li>aa</li>
+                </ul>
+            </li>
+            <li class="one">特别关心
+                <ul>
+                    <li>bb</li>
+                    <li>bb</li>
+                    <li>bb</li>
+                </ul>
+            </li>
+            <li class="one">特别关心
+                <ul>
+                    <li>cc</li>
+                    <li>cc</li>
+                    <li>cc</li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="item">
+            <li class="one">我加入的群聊</li>
+            <li class="one">我加入的群聊</li>
+            <li class="one">我加入的群聊</li>
+        </ul>
+        <ul class="item">
+            <li class="one">我的电脑</li>
+            <li class="one">我的电脑</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
