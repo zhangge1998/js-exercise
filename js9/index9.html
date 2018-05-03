@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body,p{
+            margin: 0;
+            padding: 0;
+        }
+        #wrap{
+            width: 100%;
+            height: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+        #wrap input{
+            position: relative;
+            top: 40px;
+            left: 250px;
+            border-radius: 10px;
+            outline: none;
+            border: none;
+        }
+        #wrap #box{
+            width: 800px;
+            height: 400px;
+            margin: 50px auto;
+        }
+        #box div{
+            float: left;
+            box-shadow: 0 0 15px #888888;
+            text-align: center;
+        }
+        #box1{
+            width: 455px;
+            height: 355px;
+            background: white;
+            margin-right: 20px;
+        }
+        #box1 img{
+            width: 400px;
+            height: 255px;
+            margin-top: 20px;
+        }
+        #box2{
+            width: 285px;
+            height: 355px;
+            background: white;
+        }
+        #box2 img{
+            width: 230px;
+            height: 255px;
+            margin-top: 20px;
+        }
+        #box div span{
+            float: left;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <input id="prev" type="button" value="上一组"/>
+    <input id="next" type="button" value="下一组"/>
+    <div id="box">
+        <div id="box1">
+                <img src="" alt="">
+                <p class="text">第一组第1张</p>
+                <span class="tip">1/4</span>
+        </div>
+        <div id="box2">
+                <img src="" alt="">
+                <p class="text">第一组第1张</p>
+                <span class="tip">1/3</span>
+        </div>
+    </div>
+</div>
+<script>
+    var wrap = document.querySelector('#wrap');
+    var prev  = document.querySelector('#prev');
+    var next = document.querySelector('#next');
+    var img1 = document.querySelector('#box1 img');
+    var img2 = document.querySelector('#box2 img');
+    var text1 = document.querySelector('#box1 p');
+    var text2 = document.querySelector('#box2 p');
+    var tip1 = document.querySelector('#box1 span');
+    var tip2 = document.querySelector('#box2 span');
+    var imgArr1 = ['./image/1.jpg', './image/2.jpg', './image/3.jpg', './image/4.jpg'];
+    var imgArr2 = ['./image/2.jpg', './image/4.jpg', './image/5.jpg'];
+    var num = 0;
+    var nbm = 0;
+    function imgTab() {
+        tip1.innerHTML = num+1 + '/' + imgArr1.length;
+        text1.innerHTML = '第一组第' + (num + 1) + '张';
+        img1.src = imgArr1[num];
+    }
+    imgTab();
+    function imgTab2() {
+        tip2.innerHTML = nbm+1 + '/' + imgArr2.length;
+        text2.innerHTML = '第二组第' + (nbm + 1) + '张';
+        img2.src = imgArr2[nbm];
+    }
+    imgTab2();
+    prev.onclick = setPrev;
+    function setPrev() {
+        num--;
+        nbm--;
+        if(num < 0){
+            num = imgArr1.length-1;
+        }
+        imgTab();
+        if(nbm < 0){
+            nbm = imgArr2.length-1;
+        }
+        imgTab2();
+    }
+    next.onclick = setNext;
+    function setNext() {
+        num++;
+        nbm++;
+        if(num >= imgArr1.length){
+            num = 0;
+        }
+        imgTab();
+        if(nbm >= imgArr2.length){
+            nbm = 0;
+        }
+        imgTab2();
+    }
+    img1.onclick = function() {
+        num++;
+        if(num >= imgArr1.length){
+            num = 0;
+        }
+        imgTab();
+    };
+    img2.onclick = function() {
+        nbm++;
+        if(nbm >= imgArr2.length){
+            nbm = 0;
+        }
+        imgTab2();
+    }
+</script>
+</body>
+</html>
