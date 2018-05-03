@@ -8,7 +8,7 @@
             margin: 0;
             padding: 0;
         }
-        img{
+        #image{
             width: 400px;
             height: 350px;
             border: none;
@@ -18,7 +18,7 @@
             width: 400px;
             height: 350px;
             margin: 30px auto 0;
-            border: 10px solid #9999aa;
+            /*border: 10px solid #9999aa;*/
             position: relative;
         }
         #wrap a{
@@ -79,12 +79,39 @@
             float: left;
             margin-right: 20px;
             position: relative;
-            bottom: 50px;
+            bottom: -20px;
             left: 200px;
             z-index: 1000;
-            /*border:1px solid #000;*/
-            color: white;
-            font-size: 20px;
+            color: #ccc;
+            font-size: 25px;
+        }
+        .smallBox{
+            width: 100px;
+            height: 66px;
+            position: relative;
+            bottom: 40px;
+            display: none;
+        }
+        #small{
+            width: 60px;
+            height: 50px;
+            border: 3px solid #ccc;
+        }
+        .sanjiao{
+            width: 0;
+            height: 0;
+            border: 5px solid transparent;
+            border-top-color: #ccc;
+            position: relative;
+            top: -1px;
+            left: 27px;
+        }
+        #small img{
+            width: 100%;
+            height: 100%;
+            position: relative;
+            bottom: 25px;
+            z-index: 1000;
         }
     </style>
 </head>
@@ -100,15 +127,23 @@
         <li></li>
         <li></li>
     </ul>
+    <div class="smallBox">
+        <div id="small">
+            <img id="smallImage" src="" alt="">
+        </div>
+        <div class="sanjiao">
+        </div>
+    </div>
 </div>
 <script>
     var wrap = document.querySelector('#wrap');
-    console.log(wrap);
     var prev = document.querySelector('#prev');
     var next = document.querySelector('#next');
     var tip = document.querySelector('#tip');
     var text = document.querySelector('#text');
     var img = document.querySelector('#image');
+    var box = document.querySelector('.smallBox');
+    var smallImg = document.getElementById('smallImage');
     var indexs = document.getElementsByTagName('li');
     var imageArr = ['./image/1.jpg', './image/3.jpg', './image/4.jpg'];
     var textArr  = ['雪山冰湖', '乡村雪景', '雪上之巅'];
@@ -118,7 +153,7 @@
         text.innerHTML = textArr[num];
         img.src = imageArr[num];
         for(var i = 0; i < indexs.length; i++) {
-            indexs[i].style.color = 'white';
+            indexs[i].style.color = '#ccc';
         }
         indexs[num].style.color = 'black';
     }
@@ -128,42 +163,43 @@
         if(num == imageArr.length){
             num = 0;
         }
-        clearInterval(timer);
         imgTab();
-        play();
     };
     prev.onclick = function () {
         num--;
         if(num == -1){
             num = imageArr.length-1;
         }
-        clearInterval(timer);
         imgTab();
-        play();
     };
     for(var i = 0; i < indexs.length; i++) {
-      indexs[i].onmouseover = function() {
-          for( var j = 0; j < indexs.length; j++) {
-              indexs[j].index = j;
-          }
-          this.style.color = 'black';
-          num = this.index;
-          clearInterval(timer);
-          imgTab();
-          play();
+        indexs[i].onclick = function() {
+            for( var j = 0; j < indexs.length; j++) {
+                indexs[j].index = j;
+            }
+            this.style.color = 'black';
+            num = this.index;
+            imgTab();
+        };
+        var nbm;
+        indexs[i].onmouseover = function() {
+            box.style.display = 'block';
+            for( var j = 0; j < indexs.length; j++) {
+                indexs[j].index = j;
+            }
+            box.style.left = (152 + this.index * 20)+'px';
+            this.style.color = 'black';
+            nbm = this.index;
+            smallImg.src = imageArr[nbm];
+        };
+        indexs[i].onmouseout = function() {
+            box.style.display = 'none';
+            for( var j = 0; j < indexs.length; j++) {
+                indexs[j].style.color = '#ccc';
+            }
+            indexs[num].style.color = 'black';
         }
     }
-    function code() {
-        num++;
-        if(num == imageArr.length){
-            num = 0;
-        }
-        imgTab();
-    }
-    var play = function() {
-        timer = setInterval('code()',2000);
-    };
-    play();
 </script>
 </body>
 </html>

@@ -4,22 +4,40 @@
     <meta charset="UTF-8">
     <title></title>
     <style>
-        body{
-            font-size: 18px;
-        }
         #wrap {
             width: 300px;
-            height: 400px;
             margin: 30px auto;
             position: relative;
+            border: 1px solid #000;
         }
 
-        ul {
-            list-style: none;
+        ul,h4{
             margin: 0;
             padding: 0;
         }
-
+        ul{
+            list-style: none;
+        }
+        .item h4{
+            height: 30px;
+            line-height: 30px;
+            text-indent: 20px;
+            background: rgba(173, 255, 47, 0.5);
+        }
+        .item .choose{
+            background: greenyellow;
+        }
+        .item ul{
+            text-indent: 20px;
+            display: none;
+        }
+        .item ul li{
+            line-height: 24px;
+            border-bottom: 1px solid #ccc;
+        }
+        .item ul .hover{
+            background: pink;
+        }
         .nav {
             overflow: auto;
             margin-bottom: 5px;
@@ -36,59 +54,7 @@
             margin-left: 25px;
         }
 
-        #contains ul .one:before {
-            content: '>';
-            width: 10px;
-            height: 10px;
-            margin: 3px;
-        }
-        #contains ul li{
-            line-height: 30px;
-        }
-
-        #contains ul ul {
-            display: none;
-        }
-        #contains ul ul li{
-            padding-left: 12px;
-            border-bottom: 1px solid grey;
-        }
-        #contains ul .show1{
-            display: block;
-        }
-        #contains ul {
-            display: none;
-        }
-
-        #contains .show {
-            display: block;
-        }
     </style>
-    <script>
-        window.onload = function () {
-            var navs = document.querySelectorAll('.nav a');
-            var ulist = document.querySelectorAll('#contains .item');
-            var lis = document.getElementsByClassName('one');
-            for (var i = 0; i < navs.length; i++) {
-                navs[i].onclick = function () {
-                    for (var j = 0; j < navs.length; j++) {
-                        navs[j].index = j;
-                        navs[j].classList.remove('choose');
-                        ulist[j].classList.remove('show');
-                    }
-                    this.classList.add('choose');
-                    ulist[this.index].classList.add('show');
-                }
-            }
-            for(var j = 0; j < lis.length; j++) {
-                lis[j].onclick = function() {
-                    var lili = this.getElementsByTagName('ul')[0];
-                    lili.classList.toggle('show1');
-                };
-            }
-
-        }
-    </script>
 </head>
 <body>
 <div id="wrap">
@@ -99,38 +65,76 @@
     </nav>
     <div id="contains">
         <ul class="item show">
-            <li class="one">特别关心
+            <li>
+                <h4>特别关心</h4>
                 <ul>
                     <li>aa</li>
                     <li>aa</li>
                     <li>aa</li>
                 </ul>
             </li>
-            <li class="one">特别关心
+            <li>
+                <h4>特别关心</h4>
                 <ul>
                     <li>bb</li>
                     <li>bb</li>
                     <li>bb</li>
                 </ul>
             </li>
-            <li class="one">特别关心
+            <li>
+                <h4>特别关心</h4>
                 <ul>
                     <li>cc</li>
                     <li>cc</li>
                     <li>cc</li>
                 </ul>
             </li>
-        </ul>
-        <ul class="item">
-            <li class="one">我加入的群聊</li>
-            <li class="one">我加入的群聊</li>
-            <li class="one">我加入的群聊</li>
-        </ul>
-        <ul class="item">
-            <li class="one">我的电脑</li>
-            <li class="one">我的电脑</li>
         </ul>
     </div>
 </div>
+<script>
+    var list = document.querySelector('.item');
+    var aH4 = list.querySelectorAll('h4');
+    var aUL = list.querySelectorAll('ul');
+    var ali = null;
+    var aLi = [];
+    for(var i = 0; i < aUL.length; i++) {
+        ali = aUL[i].getElementsByTagName('li');
+        for(var j = 0; j < ali.length; j++) {
+            aLi.push(ali[j]);
+        }
+    }
+    for(var i = 0; i < aLi.length; i++) {
+        aLi[i].onclick = function() {
+            if(this.className == ''){
+                for(var i = 0; i < aLi.length; i++) {
+                    aLi[i].className = '';
+                }
+                this.className = 'hover';
+            }
+            else{
+                this.className = '';
+            }
+
+        }
+    }
+    for(var i = 0; i < aH4.length; i++) {
+        aH4[i].index = i;
+        aH4[i].onclick = function(){
+            if(this.className == ''){
+                for(var i = 0; i < aUL.length; i++) {
+                    aUL[i].style.display = 'none';
+                    aH4[i].className = '';
+                }
+                this.className = 'choose';
+                aUL[this.index].style.display = 'block';
+            }
+            else{
+                this.className = '';
+                aUL[this.index].style.display = 'none';
+            }
+        };
+    }
+</script>
 </body>
 </html>
