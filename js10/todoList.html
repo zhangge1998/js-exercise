@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background: rgba(128, 128, 128, 0.11);
+        }
+        #wrap{
+            width: 600px;
+            margin: 10px auto;
+            position: relative;
+        }
+        h1{
+            margin: 0;
+            padding: 0;
+            font-size: 100px;
+            font-weight: 100;
+            text-align: center;
+            color: rgba(175, 47, 47, 0.15)
+        }
+        #wrap #text{
+            width: 100%;
+            height: 50px;
+            font-size: 22px;
+            font-style: italic;
+            line-height: 40px;
+            padding-left: 60px;
+            box-sizing: border-box;
+            border: none;
+            outline: none;
+            box-shadow: 3px 3px 5px 0 grey;
+        }
+        #wrap #list{
+            list-style: none;
+            /*margin: 0;*/
+            margin-top: 20px;
+            padding: 0;
+        }
+        #list li{
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            font-size: 22px;
+            text-indent: 20px;
+            border-bottom: 1px solid gray;
+            position: relative;
+
+        }
+        #list li .destroy{
+            display: none;
+            position: absolute;
+            top: 0;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            font-size: 30px;
+            color: #cc9a9a;
+            margin-bottom: 11px;
+            transition: color 0.2s ease-out;
+            border: none;
+            outline: none;
+            background: transparent;
+        }
+        #list li .fu{
+            margin-right: 20px;
+        }
+        #list li .choose{
+            color: grey;
+            text-decoration: line-through;
+        }
+        #list li .destroy:after{
+            content: 'x';
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <h1>todos</h1>
+    <input id="text" type="text" placeholder="what needs to be done?" autofocus>
+    <ul id="list">
+    </ul>
+    <button type="button" id="all">All</button>
+    <button type="button" id="active">Active</button>
+    <button type="button" id="completed">Completed</button>
+    <button type="button" id="clear">Clear completed</button>
+</div>
+<script>
+    var oUL = document.querySelector('#list');
+    var input = document.querySelector('input');
+    var oAll = document.querySelector('#all');
+    var oActive = document.querySelector('#active');
+    var oCompleted = document.querySelector('#completed');
+    var oClear = document.querySelector('#clear');
+    var num = 0;
+    document.onkeydown=function(event){
+//        var e = event || window.event || arguments.callee.caller.arguments[0];
+        if(event.keyCode==13){ // enter 键
+            if(input.value != ''){
+                num++;
+                var li = document.createElement('li');
+                var des = document.createElement('button');
+                des.className = 'destroy';
+                var check = document.createElement('input');
+                check.type = 'checkbox';
+                check.className = 'fu';
+                var text = document.createElement('span');
+                text.innerHTML = input.value;
+                li.appendChild(des);
+                li.appendChild(check);
+                li.appendChild(text);
+                oUL.appendChild(li);
+                li.onmouseover = function() {
+                  des.style.display = 'block';
+                };
+                li.onmouseout = function() {
+                    des.style.display = '';
+                };
+                check.onclick = function() {
+                    if(check.checked){
+                        text.className = 'choose';
+                    }
+                    else{
+                        text.className = '';
+                    }
+                };
+                des.onclick = function () {
+                    var OLi = this.parentNode;
+                    oUL.removeChild(OLi);
+                };
+//                oUL.innerHTML += '<li>' +'<input type="checkbox" class="fu"/>' +  input.value + '<button type="button" class="destroy"></button>' + '</li>';
+                input.value = '';
+                var lis = oUL.querySelectorAll('li');
+                oAll.onclick = function() {
+                    oUL.innerHTML = '';
+                    for(var i = 0; i < lis.length; i++) {
+                        oUL.appendChild(lis[i]);
+                    }
+                };
+                oActive.onclick = function() {
+                    oUL.innerHTML = '';
+                    for(var i = 0; i < lis.length; i++) {
+                        var check = lis[i].querySelector('input');
+                        if(!check.checked){
+                            oUL.appendChild(lis[i]);
+                        }
+                    }
+                };
+                oCompleted.onclick = function() {
+                    oUL.innerHTML = '';
+                    for(var i = 0; i < lis.length; i++) {
+                        var check = lis[i].querySelector('input');
+                        if(check.checked){
+                            oUL.appendChild(lis[i]);
+                        }
+                    }
+                };
+                oClear.onclick = function() {
+                    for(var i = 0; i < lis.length; i++) {
+                        var check = lis[i].querySelector('input');
+                        if(check.checked){
+                            oUL.removeChild(lis[i]);
+                        }
+                        console.log(lis.length);
+                    }
+                }
+            }
+        }
+    };
+</script>
+</body>
+</html>
