@@ -127,28 +127,32 @@
                         text.className = '';
                     }
                 };
-                des.onclick = function () {
-                    var OLi = this.parentNode;
-                    oUL.removeChild(OLi);
-                };
+//                des.onclick = function () {
+//                    var OLi = this.parentNode;
+//                    oUL.removeChild(OLi);
+//                    console.log(oUL.querySelectorAll('li').length);
+//                };
 //                oUL.innerHTML += '<li>' +'<input type="checkbox" class="fu"/>' +  input.value + '<button type="button" class="destroy"></button>' + '</li>';
                 input.value = '';
-                var lis = oUL.querySelectorAll('li');
-                oAll.onclick = function() {
-                    oUL.innerHTML = '';
-                    for(var i = 0; i < lis.length; i++) {
-                        oUL.appendChild(lis[i]);
-                    }
-                };
-                oActive.onclick = function() {
-                    oUL.innerHTML = '';
-                    for(var i = 0; i < lis.length; i++) {
-                        var check = lis[i].querySelector('input');
-                        if(!check.checked){
-                            oUL.appendChild(lis[i]);
-                        }
-                    }
-                };
+
+
+//                var lis = oUL.querySelectorAll('li');
+//                oAll.onclick = function() {
+//                    console.log(1,lis.length);
+//                    oUL.innerHTML = '';
+//                    for(var i = 0; i < lis.length; i++) {
+//                        oUL.appendChild(lis[i]);
+//                    }
+//                };
+//                oActive.onclick = function() {
+//                    oUL.innerHTML = '';
+//                    for(var i = 0; i < lis.length; i++) {
+//                        var check = lis[i].querySelector('input');
+//                        if(!check.checked){
+//                            oUL.appendChild(lis[i]);
+//                        }
+//                    }
+//                };
                 oCompleted.onclick = function() {
                     oUL.innerHTML = '';
                     for(var i = 0; i < lis.length; i++) {
@@ -167,6 +171,30 @@
                         console.log(lis.length);
                     }
                 }
+            }
+        }
+    };
+//    des.onclick = function () {
+//        var OLi = this.parentNode;
+//        oUL.removeChild(OLi);
+//        console.log(oUL.querySelectorAll('li').length);
+//    };
+    oAll.onclick = function() {
+        var lis = oUL.querySelectorAll('li');
+        oUL.innerHTML = '';
+        for (var i = 0; i < lis.length; i++) {
+            oUL.appendChild(lis[i]);
+        }
+
+    };
+    oActive.onclick = function() {
+        var lis = oUL.querySelectorAll('li');
+        console.log(lis);
+        oUL.innerHTML = '';
+        for(var i = 0; i < lis.length; i++) {
+            var check = lis[i].querySelector('input');
+            if(!check.checked){
+                oUL.appendChild(lis[i]);
             }
         }
     };
