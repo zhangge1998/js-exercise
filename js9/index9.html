@@ -20,8 +20,8 @@
             position: relative;
             top: 40px;
             left: 250px;
-            border-radius: 10px;
-            outline: none;
+            border-radius: 8px;
+            /*outline: none;*/
             border: none;
         }
 
@@ -91,14 +91,16 @@
     var wrap = document.querySelector('#wrap');
     var prev = document.querySelector('#prev');
     var next = document.querySelector('#next');
-    fnTab('#box1', imgArr1);
-    fnTab('#box2', imgArr2);
+    var num = 0;
+    fnTab('#box1', imgArr1, num);
+    fnTab('#box2', imgArr2, num);
     function fnTab(id, imgArr) {
         var box = document.querySelector(id);
         var img = box.getElementsByTagName('img')[0];
         var text = box.getElementsByTagName('p')[0];
         var tip = box.getElementsByTagName('span')[0];
         var num = 0;
+        var functionArr = [];
         function imgTab() {
             tip.innerHTML = num + 1 + '/' + imgArr.length;
             text.innerHTML = '第' +id.charAt(id.length-1) + '组第' + (num + 1) + '张';
@@ -113,20 +115,27 @@
             }
             imgTab();
         }
-        console.log(num);
         function setNext() {
             num++;
             if (num >= imgArr.length) {
                 num = 0;
             }
-            imgTab();
         }
-
-        prev.onclick = setPrev;
-        next.onclick = setNext;
+        functionArr.push(setPrev);
+        functionArr.push(setNext);
+        return functionArr;
     }
     prev.onclick = function () {
-        
+        var setPrev1 = fnTab('#box1', imgArr1)[0];
+        setPrev1();
+        var setPrev2 = fnTab('#box2', imgArr2)[0];
+        setPrev2();
+    };
+    next.onclick = function () {
+        var setNext1 = fnTab('#box1', imgArr1)[1];
+        setNext1();
+        var setNext2 = fnTab('#box2', imgArr2)[1];
+        setNext2();
     }
 </script>
 </body>
