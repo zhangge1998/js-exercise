@@ -75,6 +75,14 @@
         #list li .destroy:after{
             content: 'x';
         }
+        #wrap button{
+            border-radius: 5px;
+            display: none;
+        }
+        #wrap #left{
+            display: none;
+            margin-right: 20px;
+        }
     </style>
 </head>
 <body>
@@ -83,6 +91,7 @@
     <input id="text" type="text" placeholder="what needs to be done?" autofocus>
     <ul id="list">
     </ul>
+    <span id="left"><i></i> items left</span>
     <button type="button" id="all">All</button>
     <button type="button" id="active">Active</button>
     <button type="button" id="completed">Completed</button>
@@ -91,16 +100,24 @@
 <script>
     var oUL = document.querySelector('#list');
     var input = document.querySelector('input');
+    var left = document.querySelector('#left');
+    var oBtns = document.querySelectorAll('button');
     var oAll = document.querySelector('#all');
     var oActive = document.querySelector('#active');
     var oCompleted = document.querySelector('#completed');
     var oClear = document.querySelector('#clear');
-    var num = 0;
+    var nbm = 0;
     document.onkeydown=function(event){
-//        var e = event || window.event || arguments.callee.caller.arguments[0];
         if(event.keyCode==13){ // enter 键
             if(input.value != ''){
-                num++;
+                var lisLength = oUL.querySelectorAll('li').length;
+                nbm++;
+                if(lisLength > 0){
+                    left.style.display = 'inline-block';
+                    for(var i = 0; i < oBtns.length; i++){
+                        oBtns[i].style.display = 'inline-block';
+                    }
+                }
                 var li = document.createElement('li');
                 var des = document.createElement('button');
                 des.className = 'destroy';
@@ -113,6 +130,7 @@
                 li.appendChild(check);
                 li.appendChild(text);
                 oUL.appendChild(li);
+                left.innerHTML = nbm + ' items left';
                 li.onmouseover = function() {
                   des.style.display = 'block';
                 };
@@ -121,83 +139,80 @@
                 };
                 check.onclick = function() {
                     if(check.checked){
+                        nbm--;
+                        left.innerHTML = nbm + ' items left';
                         text.className = 'choose';
                     }
                     else{
+                        nbm++;
+                        left.innerHTML = nbm + ' items left';
                         text.className = '';
                     }
                 };
-//                des.onclick = function () {
-//                    var OLi = this.parentNode;
-//                    oUL.removeChild(OLi);
-//                    console.log(oUL.querySelectorAll('li').length);
-//                };
-//                oUL.innerHTML += '<li>' +'<input type="checkbox" class="fu"/>' +  input.value + '<button type="button" class="destroy"></button>' + '</li>';
-                input.value = '';
-
-
-//                var lis = oUL.querySelectorAll('li');
-//                oAll.onclick = function() {
-//                    console.log(1,lis.length);
-//                    oUL.innerHTML = '';
-//                    for(var i = 0; i < lis.length; i++) {
-//                        oUL.appendChild(lis[i]);
-//                    }
-//                };
-//                oActive.onclick = function() {
-//                    oUL.innerHTML = '';
-//                    for(var i = 0; i < lis.length; i++) {
-//                        var check = lis[i].querySelector('input');
-//                        if(!check.checked){
-//                            oUL.appendChild(lis[i]);
-//                        }
-//                    }
-//                };
-                oCompleted.onclick = function() {
-                    oUL.innerHTML = '';
-                    for(var i = 0; i < lis.length; i++) {
-                        var check = lis[i].querySelector('input');
-                        if(check.checked){
-                            oUL.appendChild(lis[i]);
+                des.onclick = function () {
+                    var OLi = this.parentNode;
+                    var check = OLi.querySelector('input');
+                    oUL.removeChild(OLi);
+                    if( !check.checked ){
+                        nbm--;
+                    }
+                    left.innerHTML = nbm + ' items left';
+                    var lisLength = oUL.querySelectorAll('li').length;
+                    if(lisLength == 0 ){
+                        left.style.display = 'none';
+                        for(var i = 0; i < oBtns.length; i++){
+                            oBtns[i].style.display = 'none';
                         }
                     }
                 };
-                oClear.onclick = function() {
-                    for(var i = 0; i < lis.length; i++) {
-                        var check = lis[i].querySelector('input');
-                        if(check.checked){
-                            oUL.removeChild(lis[i]);
-                        }
-                        console.log(lis.length);
-                    }
-                }
+                input.value = '';
             }
         }
     };
-//    des.onclick = function () {
-//        var OLi = this.parentNode;
-//        oUL.removeChild(OLi);
-//        console.log(oUL.querySelectorAll('li').length);
-//    };
     oAll.onclick = function() {
         var lis = oUL.querySelectorAll('li');
-        oUL.innerHTML = '';
         for (var i = 0; i < lis.length; i++) {
+            lis[i].style.display = 'block';
             oUL.appendChild(lis[i]);
         }
 
     };
     oActive.onclick = function() {
         var lis = oUL.querySelectorAll('li');
-        console.log(lis);
-        oUL.innerHTML = '';
         for(var i = 0; i < lis.length; i++) {
+            lis[i].style.display = 'block';
             var check = lis[i].querySelector('input');
-            if(!check.checked){
-                oUL.appendChild(lis[i]);
+            if(check.checked){
+                lis[i].style.display = 'none';
             }
         }
     };
+    oCompleted.onclick = function() {
+        var lis = oUL.querySelectorAll('li');
+        for(var i = 0; i < lis.length; i++) {
+            lis[i].style.display = 'block';
+            var check = lis[i].querySelector('input');
+            if(!check.checked){
+                lis[i].style.display = 'none';
+            }
+        }
+    };
+    oClear.onclick = function() {
+        var lis = oUL.querySelectorAll('li');
+        for(var i = 0; i < lis.length; i++) {
+            var check = lis[i].querySelector('input');
+            if(check.checked){
+                oUL.removeChild(lis[i]);
+            }
+        }
+        var newLis = oUL.querySelectorAll('li');
+        if(newLis.length == 0){
+            left.style.display = 'none';
+            for(var i = 0; i < oBtns.length; i++){
+                oBtns[i].style.display = 'none';
+            }
+        }
+    }
 </script>
 </body>
 </html>
