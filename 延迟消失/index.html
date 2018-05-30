@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body, ul{
+            margin:0;
+            padding: 0;
+            font-size: 15px;
+            list-style: none;
+        }
+        #wrap{
+            width: 450px;
+            height: 80px;
+            position: absolute;
+            margin: auto;
+            left: 0;
+            right: 0;
+            top:0;
+            bottom: 0;
+            background: white;
+            padding: 5px;
+            box-shadow: 1px 1px 2px;
+        }
+        #guide{
+            width: 100%;
+            height: 34px;
+            padding: 2px;
+            box-sizing: border-box;
+            background: #1a119b;
+            border-radius: 5px;
+        }
+        #item{
+            height: 34px;
+            line-height: 30px;
+        }
+        ul li{
+            color:white;
+            list-style: none;
+            box-sizing: border-box;
+            float: left;
+            padding: 0 10px;
+            margin: 0 5px;
+        }
+        #item li:hover{
+            background: rgba(255, 255, 255, 0.51);
+            border-radius: 5px;
+        }
+        #more{
+            color:white;
+            text-decoration: none;
+            position: absolute;
+            right: 10px;
+            top:5px;
+            height:34px;
+            line-height:34px;
+        }
+        .item1{
+            box-shadow: 0 0 2px;
+            width: 360px;
+            height: 20px;
+            border-radius: 3px;
+            margin-top: 15px;
+            display: none;
+        }
+        .item1 li{
+            color: #1a119b;
+            font-size: 13px;
+        }
+        .item1 li:hover>span{
+            padding-bottom: 1px;
+            border-bottom:  2px solid #000;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <div id="guide">
+        <ul id="item">
+            <li>首页</li>
+            <li>关于我们</li>
+            <li>作品</li>
+            <li>博客</li>
+        </ul>
+        <a href="" id="more">>>更多</a>
+    </div>
+    <div id="one" class="item1">
+        <ul>
+            <li><span>最近更新</span></li>
+            <li><span>活动</span></li>
+            <li><span>报名试听</span></li>
+            <li><span>学员反馈</span></li>
+        </ul>
+    </div>
+    <div id="two" class="item1">
+        <ul>
+            <li><span>妙味讲师</span></li>
+            <li><span>培训方式</span></li>
+            <li><span>作品</span></li>
+            <li><span>博客</span></li>
+        </ul>
+    </div>
+    <div id="three" class="item1">
+        <ul>
+            <li><span>巩固</span></li>
+            <li><span>MATRIY</span></li>
+            <li><span>留学e网</span></li>
+            <li><span>BCMail</span></li>
+        </ul>
+    </div>
+    <div id="four" class="item1">
+        <ul>
+            <li><span>JS教程</span></li>
+            <li><span>弹出层效果</span></li>
+            <li><span>3d标签云</span></li>
+            <li><span>Window计算器</span></li>
+        </ul>
+    </div>
+</div>
+<script>
+    var item = document.getElementById('item');
+    var oLi = item.getElementsByTagName('li');
+    var oUl = document.querySelectorAll('.item1');
+    var timer = null;
+    for(var i = 0; i < oLi.length; i++){
+        (function(num){
+            oLi[num].onclick = function(){
+                clearTimeout(timer);
+                for(var j = 0; j < oUl.length; j++){
+                    oUl[j].style.display = 'none';
+                }
+                oUl[num].style.display = 'block';
+            };
+            oUl[num].onmouseout = oLi[num].onmouseout = function(){
+                timer = setTimeout(function(){
+                    oUl[num].style.display = 'none';
+                }, 2000);
+            };
+            oUl[num].onmouseover = function(){
+                clearTimeout(timer);
+            };
+        })(i)
+    }
+</script>
+</body>
+</html>
