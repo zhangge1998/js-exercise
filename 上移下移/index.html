@@ -33,17 +33,38 @@
         #up{
             position: absolute;
             top: 30px;
-        }
-        #up:before{
-            content:'';
-            width: 0;
-            height: 0;
-            border: 5px solid transparent;
-            border-bottom-color: black;
+            z-index: 1;
+            background: white;
         }
         #down{
             position: absolute;
             bottom:0;
+            z-index: 1;
+            background: white;
+        }
+        #container{
+            width: 100%;
+            height: 340px;
+            position: relative;
+            overflow: hidden;
+        }
+        #box{
+            width: 100%;
+            height: 420px;
+            position: relative;
+            top: 30px;
+        }
+        #one, #two, #three{
+            width: 100%;
+            height: 140px;
+        }
+        .img{
+            position: relative;
+            left: 80px;
+            top: 8px;
+        }
+        .right{
+            float: right;;
         }
     </style>
 </head>
@@ -51,13 +72,50 @@
 <div id="wrap">
     <div id="content">
         <div id="header">
-            <span>妙味课堂</span>
-            <span>>>更多</span>
+            <span>我的推荐</span>
+            <span class="right">>>更多</span>
         </div>
-        <div id="up"></div>
-        <div id="down"></div>
+        <div id="container">
+            <div id="box">
+                <div id="one" style="background: red"></div>
+                <div id="two" style="background: gray"></div>
+                <div id="three" style="background: blue"></div>
+            </div>
+        </div>
+        <div id="up">
+            <img src="向上.jpg" height="15" width="25" class="img"/></div>
+        <div id="down">
+            <img src="向下.jpg" height="15" width="25" class="img"/></div>
     </div>
-
 </div>
+<script>
+    var up = document.querySelector('#up');
+    var down = document.querySelector('#down');
+    var box = document.querySelector('#box');
+    var timer = null;
+    up.onmousedown = function(){
+        timer = setInterval(function(){
+            var top = window.getComputedStyle(box, null).top;
+            if(parseInt(top) >= -81){
+                top = parseInt(top) - 1;
+                box.style.top = top + 'px';
+            }
+        }, 30);
+    };
+    down.onmousedown = function(){
+        clearInterval(timer);
+        timer = setInterval(function(){
+            var top = window.getComputedStyle(box, null).top;
+            if(parseInt(top) < 30){
+                top = parseInt(top) + 1;
+                box.style.top = top + 'px';
+            }
+        }, 30)
+    };
+    down.onmouseup = up.onmouseup = function(){
+        clearInterval(timer);
+    }
+
+</script>
 </body>
 </html>
