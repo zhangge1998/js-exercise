@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body { background: #29033e; }
+        #clock { width: 520px; height: 520px; margin: 50px auto; background-image: url("./images/bg.png"); text-align: center; }
+        #clock h2 { padding: 80px 0 30px; }
+        .year { padding-top: 30px; }
+        .time { padding: 30px 0; }
+    </style>
+</head>
+<body>
+<div id="clock" class="date">
+    <h2><img src="images/title.png"/></h2>
+    <div class="year">
+        <img class="num" src="images/2.png"/>
+        <img class="num" src="images/0.png"/>
+        <img class="num" src="images/1.png"/>
+        <img class="num" src="images/8.png"/>
+        <img src="images/year.png"/>
+        <img class="num" src="images/0.png"/>
+        <img class="num" src="images/5.png"/>
+        <img src="images/month.png"/>
+        <img class="num" src="images/0.png"/>
+        <img class="num" src="images/8.png"/>
+        <img src="images/seven.png"/></div>
+    <div class="time">
+        <img class="num" src="images/2.png"/>
+        <img class="num" src="images/1.png"/>
+        <img src="images/sign.png"/>
+        <img class="num" src="images/3.png"/>
+        <img class="num" src="images/9.png"/>
+        <img src="images/sign.png"/>
+        <img class="num" src="images/2.png"/>
+        <img class="num" src="images/2.png"/>
+        <img src="images/week.png"/>
+        <img class="num2" src="images/one.png"/>
+    </div>
+</div>
+<script>
+    (function () {
+        var num = document.querySelectorAll('.num');
+        var num2 = document.querySelector('.num2');
+        var weekArr = [
+            "images/seven.png",
+            "images/one.png",
+            "images/two.png",
+            "images/three.png",
+            "images/four.png",
+            "images/five.png",
+            "images/six.png"
+        ];
+
+        function toDate() {
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = toDB(date.getMonth() + 1);
+            var day = toDB(date.getDate());
+            var hour = toDB(date.getHours());
+            var week = date.getDate();
+            var minute = toDB(date.getMinutes());
+            var second = toDB(date.getSeconds());
+            var time = year + month + day + hour + minute + second + time;
+            for (var i = 0; i < num.length; i++) {
+                num[i].src = './images/' + time[i] + '.png';
+            }
+            num2.src = weekArr[week];
+        }
+        toDate();
+        setInterval(toDate, 1000);
+        function toDB(num) {
+            if (num > 10) {
+                return '' + num;
+            }
+            return '0' + num;
+        }
+    })()
+</script>
+</body>
+</html>
