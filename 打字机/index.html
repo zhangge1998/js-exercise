@@ -3,12 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        body{
+            background: url(./bg.png);
+            text-align: center;
+            font-size: 30px;
+        }
+        div{
+            margin-top: 50px;
+        }
+        textarea{
+            border: 2px solid #29033e;
+            border-radius: 10px;
+            outline: none;
+            padding: 10px;
+        }
+        button{
+            box-sizing: content-box;
+            padding: 20px;
+            position: relative;
+            bottom: 75px;
+            border: none;
+            outline: none;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-<textarea rows="5" cols="20" placeholder="请输入"></textarea>
-<button type="button">
-    点击挪到右边
-</button>
-<textarea rows="5" cols="20" placeholder="请输入"></textarea>
+<h1>打字机</h1>
+<div>
+    <textarea rows="12" cols="30" placeholder="请输入"></textarea>
+    <button type="button">
+        点击挪到右边
+    </button>
+    <textarea rows="12" cols="30"></textarea>
+</div>
+<script>
+    (function(){
+        var texts = document.querySelectorAll('textarea');
+        var oBtn = document.querySelector('button');
+        var timer = 0;
+        oBtn.onclick = function(){
+            var text = texts[0].value.split('');
+            if(text.length == 0){
+                alert('请先在左侧文本区输入');
+            }
+            else{
+                texts[1].value = '';
+                timer = setInterval(function(){
+                    texts[1].value += text.shift();
+                    if(text.length == 0){
+                        clearInterval(timer);
+                    }
+                }, 40)
+            }
+        }
+    })()
+</script>
 </body>
 </html>
