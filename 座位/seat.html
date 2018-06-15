@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #seat{
+            position: relative;
+            list-style: none;
+        }
+        #seat li{
+            width: 35px;
+            height: 35px;
+            border-radius: 5px;
+            position: absolute;
+        }
+        .default{
+            background: #B9DEA0;
+        }
+        .select{
+            background: #333;
+        }
+        .selected{
+            background: green;
+        }
+    </style>
+</head>
+<body>
+<ul id="seat">
+</ul>
+<button id="otn">保存</button>
+<script>
+    function create(m, n){
+        var seat = document.querySelector('#seat');
+        var a = '';
+        for(var i = 1; i <= m; i++){
+            for(var j = 1; j <= n; j++){
+                a += '<li style="top: '+ i*50 +'px;left: '+ j*50 +'px; " class="default">' + '</li>'
+            }
+        }
+        seat.innerHTML = a;
+    }
+    create(7, 8);
+    (function(){
+        var seat = document.querySelector('#seat');
+        var lis = seat.querySelectorAll('li');
+        for(var i = 0; i < lis.length; i++){
+            (function(num){
+                lis[num].onclick = function(){
+                    console.log(num+1);
+                    lis[num].classList.toggle('select');
+                }
+            })(i)
+        }
+        var otn = document.querySelector('#otn');
+        otn.onclick = function(){
+            for(var j = 0; j < lis.length; j++){
+                lis[j].index = j + 1;
+                if(lis[j].classList.contains('select')){
+                    var column = j % 8;
+                    var row = parseInt(j / 8);
+                    console.log(lis[j].index, row+1, column+1);
+                }
+            }
+        };
+    })()
+</script>
+</body>
+</html>
